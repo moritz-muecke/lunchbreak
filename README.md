@@ -23,7 +23,8 @@ A simple internal application for coordinating lunch break trips to town or the 
 
 ### Prerequisites
 
-- Node.js 20+ and npm/yarn/pnpm
+- Node.js 20+
+- pnpm (install with `npm install -g pnpm`)
 
 ### Installation
 
@@ -33,10 +34,10 @@ git clone <repository-url>
 cd lunchbreak
 
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -45,10 +46,10 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ```bash
 # Create optimized production build
-npm run build
+pnpm build
 
 # Start production server
-npm start
+pnpm start
 ```
 
 ## Usage
@@ -129,7 +130,7 @@ The code follows clean code principles:
 The project uses ESLint for code quality:
 
 ```bash
-npm run lint
+pnpm lint
 ```
 
 ### Adding Features
