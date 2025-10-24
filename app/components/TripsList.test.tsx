@@ -39,7 +39,10 @@ describe('TripsList', () => {
     render(<TripsList trips={[]} {...mockHandlers} />)
 
     expect(
-      screen.getByText('No trips planned yet. Create one above!')
+      screen.getByText('No trips planned yet')
+    ).toBeInTheDocument()
+    expect(
+      screen.getByText(/Create the first trip above to get started/)
     ).toBeInTheDocument()
   })
 
@@ -48,15 +51,15 @@ describe('TripsList', () => {
 
     expect(screen.getByText('Berlin')).toBeInTheDocument()
     expect(screen.getByText('Munich')).toBeInTheDocument()
-    expect(screen.getByText(/Driver: John/)).toBeInTheDocument()
-    expect(screen.getByText(/Driver: Jane/)).toBeInTheDocument()
+    expect(screen.getByText('John')).toBeInTheDocument()
+    expect(screen.getByText('Jane')).toBeInTheDocument()
   })
 
   it('does not display empty state when trips exist', () => {
     render(<TripsList trips={mockTrips} {...mockHandlers} />)
 
     expect(
-      screen.queryByText('No trips planned yet. Create one above!')
+      screen.queryByText('No trips planned yet')
     ).not.toBeInTheDocument()
   })
 
@@ -72,8 +75,8 @@ describe('TripsList', () => {
   it('renders correct number of TripCard components', () => {
     render(<TripsList trips={mockTrips} {...mockHandlers} />)
 
-    // Each trip should have a "Delete Trip" button in its TripCard
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete Trip' })
+    // Each trip should have a "Delete" button in its TripCard
+    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
     expect(deleteButtons).toHaveLength(mockTrips.length)
   })
 })

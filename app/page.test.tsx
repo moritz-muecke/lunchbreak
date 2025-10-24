@@ -40,10 +40,7 @@ describe('Home Page', () => {
   it('renders the main heading and description', () => {
     render(<Home />)
 
-    expect(screen.getByText('Lunch Break Planner')).toBeInTheDocument()
-    expect(
-      screen.getByText('Coordinate trips to town or the supermarket')
-    ).toBeInTheDocument()
+    expect(screen.getByText(/Create or join trips to town, the supermarket, or anywhere else/)).toBeInTheDocument()
   })
 
   it('fetches and displays trips on mount', async () => {
@@ -64,7 +61,7 @@ describe('Home Page', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText('No trips planned yet. Create one above!')
+        screen.getByText('No trips planned yet')
       ).toBeInTheDocument()
     })
   })
@@ -75,8 +72,8 @@ describe('Home Page', () => {
     await waitFor(() => {
       expect(screen.getByText('Create a Trip')).toBeInTheDocument()
     })
-    expect(screen.getByPlaceholderText('e.g., John')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('e.g., City Center, Supermarket')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter your name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Where are you going?')).toBeInTheDocument()
   })
 
   it('renders TripsList component', () => {
@@ -93,12 +90,12 @@ describe('Home Page', () => {
     render(<Home />)
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('e.g., John')).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Enter your name')).toBeInTheDocument()
     })
 
     // Fill out the form
-    const nameInput = screen.getByPlaceholderText('e.g., John')
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket')
+    const nameInput = screen.getByPlaceholderText('Enter your name')
+    const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
 
@@ -132,11 +129,11 @@ describe('Home Page', () => {
     render(<Home />)
 
     await waitFor(() => {
-      expect(screen.getByPlaceholderText('e.g., John')).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Enter your name')).toBeInTheDocument()
     })
 
-    const nameInput = screen.getByPlaceholderText('e.g., John')
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket')
+    const nameInput = screen.getByPlaceholderText('Enter your name')
+    const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
 
@@ -165,7 +162,7 @@ describe('Home Page', () => {
     })
 
     // Find the "Join Trip" input and button for the first trip
-    const joinInputs = screen.getAllByPlaceholderText('Your name')
+    const joinInputs = screen.getAllByPlaceholderText('Enter your name to join')
     const joinButtons = screen.getAllByRole('button', { name: 'Join Trip' })
 
     await user.type(joinInputs[0], 'Charlie')
@@ -227,7 +224,7 @@ describe('Home Page', () => {
       expect(screen.getByText('Berlin')).toBeInTheDocument()
     })
 
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete Trip' })
+    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
     await user.click(deleteButtons[0])
 
     await waitFor(() => {
@@ -247,7 +244,7 @@ describe('Home Page', () => {
       expect(screen.getByText('Berlin')).toBeInTheDocument()
     })
 
-    const joinInputs = screen.getAllByPlaceholderText('Your name')
+    const joinInputs = screen.getAllByPlaceholderText('Enter your name to join')
     const joinButtons = screen.getAllByRole('button', { name: 'Join Trip' })
 
     await user.type(joinInputs[0], 'Charlie')
@@ -272,7 +269,7 @@ describe('Home Page', () => {
       expect(screen.getByText('Berlin')).toBeInTheDocument()
     })
 
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete Trip' })
+    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
     await user.click(deleteButtons[0])
 
     await waitFor(() => {

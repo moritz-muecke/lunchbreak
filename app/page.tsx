@@ -59,14 +59,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-4 sm:p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold mb-2 text-zinc-900 dark:text-zinc-50">
-          Lunch Break Planner
-        </h1>
-        <p className="text-zinc-600 dark:text-zinc-400 mb-8">
-          Coordinate trips to town or the supermarket
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-slate-100">
+      <div className="max-w-5xl mx-auto px-6 py-6">
+        <div className="text-center mb-8">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Create or join trips to town, the supermarket, or anywhere else with your colleagues
+          </p>
+        </div>
 
         <TripForm onSubmit={handleCreateTrip} />
 

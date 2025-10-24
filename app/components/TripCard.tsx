@@ -33,60 +33,77 @@ export default function TripCard({
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md p-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4">
-        <div>
-          <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-all duration-200">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-6">
+        <div className="flex-1">
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
             {trip.destination}
           </h3>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Driver: {trip.driverName} • Departure: {trip.departureTime}
-          </p>
+          <div className="space-y-1 text-gray-600">
+            <p>
+              <span className="font-medium">Driver:</span> {trip.driverName}
+            </p>
+            <p>
+              <span className="font-medium">Departure:</span> {trip.departureTime}
+            </p>
+          </div>
         </div>
         <button
           onClick={() => onDelete(trip.id)}
-          className="mt-2 sm:mt-0 text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
+          className="mt-4 sm:mt-0 text-sm text-red-500 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-200 font-medium"
         >
-          Delete Trip
+          Delete
         </button>
       </div>
 
-      <div className="mb-4">
-        <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
-          Seats: {seatsLeft} available out of {trip.availableSeats}
-        </p>
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            <span className="text-sm font-medium text-gray-700">
+              {seatsLeft} seat{seatsLeft !== 1 ? 's' : ''} available
+            </span>
+          </div>
+          <span className="text-sm text-gray-500">
+            {trip.availableSeats} total seats
+          </span>
+        </div>
+        
         {trip.passengers.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {trip.passengers.map((passenger, idx) => (
-              <span
-                key={idx}
-                className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
-              >
-                {passenger}
-                <button
-                  onClick={() => onLeave(trip.id, passenger)}
-                  className="text-blue-600 dark:text-blue-300 hover:text-blue-800 dark:hover:text-blue-100"
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-gray-700 mb-3">Passengers:</p>
+            <div className="flex flex-wrap gap-2">
+              {trip.passengers.map((passenger, idx) => (
+                <div
+                  key={idx}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-800 rounded-full text-sm font-medium"
                 >
-                  ×
-                </button>
-              </span>
-            ))}
+                  {passenger}
+                  <button
+                    onClick={() => onLeave(trip.id, passenger)}
+                    className="text-blue-600 hover:text-blue-800 ml-1 hover:bg-blue-100 rounded-full w-5 h-5 flex items-center justify-center text-xs transition-all duration-200"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
 
       {seatsLeft > 0 && (
-        <form onSubmit={handleJoinSubmit} className="flex gap-2">
+        <form onSubmit={handleJoinSubmit} className="flex gap-3">
           <input
             type="text"
             name="passengerName"
-            placeholder="Your name"
+            placeholder="Enter your name to join"
             required
-            className="flex-1 px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100"
+            className="flex-1 px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:bg-white transition-all"
           />
           <button
             type="submit"
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-md transition-colors"
+            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             Join Trip
           </button>

@@ -9,8 +9,8 @@ describe('TripForm', () => {
     render(<TripForm onSubmit={mockOnSubmit} />)
 
     expect(screen.getByText('Create a Trip')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('e.g., John')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('e.g., City Center, Supermarket')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter your name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Where are you going?')).toBeInTheDocument()
     expect(screen.getByDisplayValue('3')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Create Trip' })).toBeInTheDocument()
   })
@@ -19,8 +19,8 @@ describe('TripForm', () => {
     const mockOnSubmit = vi.fn()
     render(<TripForm onSubmit={mockOnSubmit} />)
 
-    const nameInput = screen.getByPlaceholderText('e.g., John') as HTMLInputElement
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket') as HTMLInputElement
+    const nameInput = screen.getByPlaceholderText('Enter your name') as HTMLInputElement
+    const destinationInput = screen.getByPlaceholderText('Where are you going?') as HTMLInputElement
     const seatsInput = screen.getByDisplayValue('3') as HTMLInputElement
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLInputElement
@@ -36,8 +36,8 @@ describe('TripForm', () => {
     const mockOnSubmit = vi.fn()
     render(<TripForm onSubmit={mockOnSubmit} />)
 
-    const nameInput = screen.getByPlaceholderText('e.g., John')
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket')
+    const nameInput = screen.getByPlaceholderText('Enter your name')
+    const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
@@ -62,8 +62,8 @@ describe('TripForm', () => {
     const mockOnSubmit = vi.fn()
     render(<TripForm onSubmit={mockOnSubmit} />)
 
-    const nameInput = screen.getByPlaceholderText('e.g., John')
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket')
+    const nameInput = screen.getByPlaceholderText('Enter your name')
+    const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
@@ -89,8 +89,8 @@ describe('TripForm', () => {
     const mockOnSubmit = vi.fn().mockResolvedValue(undefined)
     render(<TripForm onSubmit={mockOnSubmit} />)
 
-    const nameInput = screen.getByPlaceholderText('e.g., John') as HTMLInputElement
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket') as HTMLInputElement
+    const nameInput = screen.getByPlaceholderText('Enter your name') as HTMLInputElement
+    const destinationInput = screen.getByPlaceholderText('Where are you going?') as HTMLInputElement
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLInputElement
 
@@ -121,8 +121,8 @@ describe('TripForm', () => {
     const mockOnSubmit = vi.fn()
     render(<TripForm onSubmit={mockOnSubmit} />)
 
-    const nameInput = screen.getByPlaceholderText('e.g., John')
-    const destinationInput = screen.getByPlaceholderText('e.g., City Center, Supermarket')
+    const nameInput = screen.getByPlaceholderText('Enter your name')
+    const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
     const timeInputs = screen.getAllByDisplayValue('')
     const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement

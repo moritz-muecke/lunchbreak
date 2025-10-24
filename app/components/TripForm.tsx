@@ -40,14 +40,20 @@ export default function TripForm({ onSubmit }: TripFormProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-md p-6 mb-8">
-      <h2 className="text-2xl font-semibold mb-4 text-zinc-900 dark:text-zinc-50">
-        Create a Trip
-      </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-1 text-zinc-700 dark:text-zinc-300">
+    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 mb-12">
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+          Create a Trip
+        </h2>
+        <p className="text-gray-600">
+          Start a new trip and let others join you
+        </p>
+      </div>
+      
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
               Your Name
             </label>
             <input
@@ -55,12 +61,13 @@ export default function TripForm({ onSubmit }: TripFormProps) {
               value={driverName}
               onChange={(e) => setDriverName(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100"
-              placeholder="e.g., John"
+              className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+              placeholder="Enter your name"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1 text-zinc-700 dark:text-zinc-300">
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
               Destination
             </label>
             <input
@@ -68,12 +75,13 @@ export default function TripForm({ onSubmit }: TripFormProps) {
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100"
-              placeholder="e.g., City Center, Supermarket"
+              className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
+              placeholder="Where are you going?"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1 text-zinc-700 dark:text-zinc-300">
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
               Available Seats
             </label>
             <input
@@ -83,11 +91,12 @@ export default function TripForm({ onSubmit }: TripFormProps) {
               value={availableSeats}
               onChange={(e) => setAvailableSeats(Number(e.target.value))}
               required
-              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100"
+              className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1 text-zinc-700 dark:text-zinc-300">
+          
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">
               Departure Time
             </label>
             <input
@@ -95,16 +104,19 @@ export default function TripForm({ onSubmit }: TripFormProps) {
               value={departureTime}
               onChange={(e) => setDepartureTime(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100"
+              className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
             />
           </div>
         </div>
-        <button
-          type="submit"
-          className="w-full sm:w-auto px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors"
-        >
-          Create Trip
-        </button>
+        
+        <div className="pt-4">
+          <button
+            type="submit"
+            className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium px-8 py-3 rounded-xl transition-all duration-200 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          >
+            Create Trip
+          </button>
+        </div>
       </form>
     </div>
   );

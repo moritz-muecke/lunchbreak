@@ -24,14 +24,14 @@ describe('TripCard', () => {
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
 
     expect(screen.getByText('Berlin')).toBeInTheDocument()
-    expect(screen.getByText(/Driver: John Doe/)).toBeInTheDocument()
-    expect(screen.getByText(/Departure: 14:00/)).toBeInTheDocument()
+    expect(screen.getByText('John Doe')).toBeInTheDocument()
+    expect(screen.getByText('14:00')).toBeInTheDocument()
   })
 
   it('displays correct number of available seats', () => {
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
 
-    expect(screen.getByText('Seats: 2 available out of 4')).toBeInTheDocument()
+    expect(screen.getByText('2 seats available')).toBeInTheDocument()
   })
 
   it('displays passenger list', () => {
@@ -45,7 +45,7 @@ describe('TripCard', () => {
     const user = userEvent.setup()
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
 
-    const input = screen.getByPlaceholderText('Your name')
+    const input = screen.getByPlaceholderText('Enter your name to join')
     const joinButton = screen.getByRole('button', { name: 'Join Trip' })
 
     await user.type(input, 'Charlie')
@@ -68,7 +68,7 @@ describe('TripCard', () => {
     const user = userEvent.setup()
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
 
-    const deleteButton = screen.getByRole('button', { name: 'Delete Trip' })
+    const deleteButton = screen.getByRole('button', { name: 'Delete' })
     await user.click(deleteButton)
 
     expect(mockHandlers.onDelete).toHaveBeenCalledWith('1')
@@ -81,13 +81,13 @@ describe('TripCard', () => {
     }
     render(<TripCard trip={fullTrip} {...mockHandlers} />)
 
-    expect(screen.queryByPlaceholderText('Your name')).not.toBeInTheDocument()
+    expect(screen.queryByPlaceholderText('Enter your name to join')).not.toBeInTheDocument()
   })
 
   it('shows join form when seats are available', () => {
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
 
-    expect(screen.getByPlaceholderText('Your name')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter your name to join')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Join Trip' })).toBeInTheDocument()
   })
 })
