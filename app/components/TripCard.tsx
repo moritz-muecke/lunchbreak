@@ -5,8 +5,9 @@
 
 'use client';
 
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { Trip } from '../lib/types';
+import ConfirmDialog from './ConfirmDialog';
 
 type TripCardProps = {
   trip: Trip;
@@ -21,6 +22,15 @@ export default function TripCard({
   onLeave,
   onDelete,
 }: TripCardProps) {
+  const [confirmDialog, setConfirmDialog] = useState<{
+    isOpen: boolean;
+    type: 'deleteTrip' | 'removePassenger';
+    passengerName?: string;
+  }>({
+    isOpen: false,
+    type: 'deleteTrip',
+  });
+
   const seatsLeft = trip.availableSeats - trip.passengers.length;
 
   const handleJoinSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -30,6 +40,34 @@ export default function TripCard({
     ) as HTMLInputElement;
     await onJoin(trip.id, input.value);
     input.value = '';
+  };
+
+  const handleDeleteTrip = () => {
+    setConfirmDialog({
+      isOpen: true,
+      type: 'deleteTrip',
+    });
+  };
+
+  const handleRemovePassenger = (passengerName: string) => {
+    setConfirmDialog({
+      isOpen: true,
+      type: 'removePassenger',
+      passengerName,
+    });
+  };
+
+  const handleConfirm = async () => {
+    if (confirmDialog.type === 'deleteTrip') {
+      await onDelete(trip.id);
+    } else if (confirmDialog.type === 'removePassenger' && confirmDialog.passengerName) {
+      await onLeave(trip.id, confirmDialog.passengerName);
+    }
+    setConfirmDialog({ isOpen: false, type: 'deleteTrip' });
+  };
+
+  const handleCancel = () => {
+    setConfirmDialog({ isOpen: false, type: 'deleteTrip' });
   };
 
   return (
@@ -49,7 +87,7 @@ export default function TripCard({
           </div>
         </div>
         <button
-          onClick={() => onDelete(trip.id)}
+          onClick={handleDeleteTrip}
           className="mt-4 sm:mt-0 text-sm text-red-500 hover:text-red-700 px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-200 font-medium"
         >
           Delete
@@ -80,7 +118,7 @@ export default function TripCard({
                 >
                   {passenger}
                   <button
-                    onClick={() => onLeave(trip.id, passenger)}
+                    onClick={() => handleRemovePassenger(passenger)}
                     className="text-blue-600 hover:text-blue-800 ml-1 hover:bg-blue-100 rounded-full w-5 h-5 flex items-center justify-center text-xs transition-all duration-200"
                   >
                     ×
@@ -109,6 +147,21 @@ export default function TripCard({
           </button>
         </form>
       )}
+
+      <ConfirmDialog
+        isOpen={confirmDialog.isOpen}
+        title={confirmDialog.type === 'deleteTrip' ? 'Delete Trip' : 'Remove Passenger'}
+        message={
+          confirmDialog.type === 'deleteTrip'
+            ? `Are you sure you want to delete the trip to "${trip.destination}"? This action cannot be undone.`
+            : `Are you sure you want to remove "${confirmDialog.passengerName}" from this trip?`
+        }
+        confirmLabel={confirmDialog.type === 'deleteTrip' ? 'Delete' : 'Remove'}
+        cancelLabel="Cancel"
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        variant={confirmDialog.type === 'deleteTrip' ? 'danger' : 'warning'}
+      />
     </div>
   );
 }

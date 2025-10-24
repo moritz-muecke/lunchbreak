@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '../../test/test-utils'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { render, screen, waitFor } from '../../test/test-utils'
 import userEvent from '@testing-library/user-event'
 import TripCard from './TripCard'
 import { Trip } from '../lib/types'
@@ -19,6 +19,10 @@ describe('TripCard', () => {
     onLeave: vi.fn(),
     onDelete: vi.fn(),
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
 
   it('renders trip information correctly', () => {
     render(<TripCard trip={mockTrip} {...mockHandlers} />)
@@ -61,7 +65,39 @@ describe('TripCard', () => {
     const removeButtons = screen.getAllByText('×')
     await user.click(removeButtons[0])
 
+    // Confirmation dialog should appear
+    expect(screen.getByText('Remove Passenger')).toBeInTheDocument()
+    expect(screen.getByText('Are you sure you want to remove "Alice" from this trip?')).toBeInTheDocument()
+
+    // Click the confirm button in the dialog
+    const confirmButton = screen.getByRole('button', { name: 'Remove' })
+    await user.click(confirmButton)
+
     expect(mockHandlers.onLeave).toHaveBeenCalledWith('1', 'Alice')
+  })
+
+  it('does not call onLeave when canceling passenger removal', async () => {
+    const user = userEvent.setup()
+    render(<TripCard trip={mockTrip} {...mockHandlers} />)
+
+    const removeButtons = screen.getAllByText('×')
+    await user.click(removeButtons[0])
+
+    // Confirmation dialog should appear
+    await waitFor(() => {
+      expect(screen.getByText('Remove Passenger')).toBeInTheDocument()
+    })
+
+    // Click the cancel button
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+    await user.click(cancelButton)
+
+    // Wait a bit to ensure any potential async operations complete
+    await waitFor(() => {
+      expect(screen.queryByText('Remove Passenger')).not.toBeInTheDocument()
+    })
+
+    expect(mockHandlers.onLeave).not.toHaveBeenCalled()
   })
 
   it('calls onDelete when deleting a trip', async () => {
@@ -71,7 +107,39 @@ describe('TripCard', () => {
     const deleteButton = screen.getByRole('button', { name: 'Delete' })
     await user.click(deleteButton)
 
+    // Confirmation dialog should appear
+    expect(screen.getByText('Delete Trip')).toBeInTheDocument()
+    expect(screen.getByText(/Are you sure you want to delete the trip to "Berlin"/)).toBeInTheDocument()
+
+    // Click the confirm button in the dialog
+    const confirmButton = screen.getAllByRole('button', { name: 'Delete' })[1] // Second one is in the dialog
+    await user.click(confirmButton)
+
     expect(mockHandlers.onDelete).toHaveBeenCalledWith('1')
+  })
+
+  it('does not call onDelete when canceling trip deletion', async () => {
+    const user = userEvent.setup()
+    render(<TripCard trip={mockTrip} {...mockHandlers} />)
+
+    const deleteButton = screen.getByRole('button', { name: 'Delete' })
+    await user.click(deleteButton)
+
+    // Confirmation dialog should appear
+    await waitFor(() => {
+      expect(screen.getByText('Delete Trip')).toBeInTheDocument()
+    })
+
+    // Click the cancel button
+    const cancelButton = screen.getByRole('button', { name: 'Cancel' })
+    await user.click(cancelButton)
+
+    // Wait to ensure dialog closes
+    await waitFor(() => {
+      expect(screen.queryByText('Delete Trip')).not.toBeInTheDocument()
+    })
+
+    expect(mockHandlers.onDelete).not.toHaveBeenCalled()
   })
 
   it('does not show join form when no seats available', () => {

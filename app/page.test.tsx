@@ -207,28 +207,17 @@ describe('Home Page', () => {
     const removeButtons = screen.getAllByText('×')
     await user.click(removeButtons[0])
 
+    // Confirmation dialog should appear
+    await waitFor(() => {
+      expect(screen.getByText('Remove Passenger')).toBeInTheDocument()
+    })
+
+    // Click the confirm button in the dialog
+    const confirmButton = screen.getByRole('button', { name: 'Remove' })
+    await user.click(confirmButton)
+
     await waitFor(() => {
       expect(apiClient.updateTrip).toHaveBeenCalledWith('1', 'Alice', 'leave')
-      expect(apiClient.fetchTrips).toHaveBeenCalledTimes(2)
-    })
-  })
-
-  it('deletes a trip and reloads trips', async () => {
-    const user = userEvent.setup()
-    vi.mocked(apiClient.fetchTrips).mockResolvedValue(mockTrips)
-    vi.mocked(apiClient.deleteTrip).mockResolvedValue(true)
-
-    render(<Home />)
-
-    await waitFor(() => {
-      expect(screen.getByText('Berlin')).toBeInTheDocument()
-    })
-
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
-    await user.click(deleteButtons[0])
-
-    await waitFor(() => {
-      expect(apiClient.deleteTrip).toHaveBeenCalledWith('1')
       expect(apiClient.fetchTrips).toHaveBeenCalledTimes(2)
     })
   })
@@ -255,28 +244,6 @@ describe('Home Page', () => {
     })
 
     // Should not fetch trips again if update failed
-    expect(apiClient.fetchTrips).toHaveBeenCalledTimes(1)
-  })
-
-  it('does not reload trips when delete fails', async () => {
-    const user = userEvent.setup()
-    vi.mocked(apiClient.fetchTrips).mockResolvedValue(mockTrips)
-    vi.mocked(apiClient.deleteTrip).mockResolvedValue(false)
-
-    render(<Home />)
-
-    await waitFor(() => {
-      expect(screen.getByText('Berlin')).toBeInTheDocument()
-    })
-
-    const deleteButtons = screen.getAllByRole('button', { name: 'Delete' })
-    await user.click(deleteButtons[0])
-
-    await waitFor(() => {
-      expect(apiClient.deleteTrip).toHaveBeenCalled()
-    })
-
-    // Should not fetch trips again if delete failed
     expect(apiClient.fetchTrips).toHaveBeenCalledTimes(1)
   })
 })

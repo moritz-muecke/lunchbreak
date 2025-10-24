@@ -95,18 +95,18 @@ export default function TripForm({ onSubmit }: TripFormProps) {
             />
           </div>
           
-          <div className="space-y-2">
+            <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">
               Departure Time
             </label>
             <input
               type="time"
-              value={departureTime}
+              value={departureTime || "12:00"}
               onChange={(e) => setDepartureTime(e.target.value)}
               required
               className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
             />
-          </div>
+            </div>
         </div>
         
         <div className="pt-4">
