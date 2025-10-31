@@ -97,7 +97,7 @@ export default function TripCard({
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            <div className={`w-3 h-3 rounded-full ${seatsLeft === 0 ? 'bg-red-500' : 'bg-green-500'}`}></div>
             <span className="text-sm font-medium text-gray-700">
               {seatsLeft} seat{seatsLeft !== 1 ? 's' : ''} available
             </span>

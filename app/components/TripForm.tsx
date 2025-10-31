@@ -20,7 +20,7 @@ export default function TripForm({ onSubmit }: TripFormProps) {
   const [destination, setDestination] = useState('');
   const [driverName, setDriverName] = useState('');
   const [availableSeats, setAvailableSeats] = useState(3);
-  const [departureTime, setDepartureTime] = useState('');
+  const [departureTime, setDepartureTime] = useState('12:00');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -36,7 +36,7 @@ export default function TripForm({ onSubmit }: TripFormProps) {
     setDestination('');
     setDriverName('');
     setAvailableSeats(3);
-    setDepartureTime('');
+    setDepartureTime('12:00');
   };
 
   return (
@@ -101,7 +101,7 @@ export default function TripForm({ onSubmit }: TripFormProps) {
             </label>
             <input
               type="time"
-              value={departureTime || "12:00"}
+              value={departureTime}
               onChange={(e) => setDepartureTime(e.target.value)}
               required
               className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all"
