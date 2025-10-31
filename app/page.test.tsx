@@ -96,12 +96,9 @@ describe('Home Page', () => {
     // Fill out the form
     const nameInput = screen.getByPlaceholderText('Enter your name')
     const destinationInput = screen.getByPlaceholderText('Where are you going?')
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
 
     await user.type(nameInput, 'Alice')
     await user.type(destinationInput, 'Hamburg')
-    await user.type(timeInput, '12:00')
 
     // Submit the form
     await user.click(screen.getByRole('button', { name: 'Create Trip' }))
@@ -134,12 +131,9 @@ describe('Home Page', () => {
 
     const nameInput = screen.getByPlaceholderText('Enter your name')
     const destinationInput = screen.getByPlaceholderText('Where are you going?')
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
 
     await user.type(nameInput, 'Bob')
     await user.type(destinationInput, 'Frankfurt')
-    await user.type(timeInput, '13:00')
     await user.click(screen.getByRole('button', { name: 'Create Trip' }))
 
     await waitFor(() => {

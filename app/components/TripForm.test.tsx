@@ -22,13 +22,12 @@ describe('TripForm', () => {
     const nameInput = screen.getByPlaceholderText('Enter your name') as HTMLInputElement
     const destinationInput = screen.getByPlaceholderText('Where are you going?') as HTMLInputElement
     const seatsInput = screen.getByDisplayValue('3') as HTMLInputElement
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLInputElement
+    const timeInput = screen.getByDisplayValue('12:00') as HTMLInputElement
 
     expect(nameInput.value).toBe('')
     expect(destinationInput.value).toBe('')
     expect(seatsInput.value).toBe('3')
-    expect(timeInput.value).toBe('')
+    expect(timeInput.value).toBe('12:00')
   })
 
   it('updates input values when user types', async () => {
@@ -39,8 +38,7 @@ describe('TripForm', () => {
     const nameInput = screen.getByPlaceholderText('Enter your name')
     const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
+    const timeInput = screen.getByDisplayValue('12:00') as HTMLElement
 
     await user.clear(nameInput)
     await user.type(nameInput, 'John Doe')
@@ -53,6 +51,7 @@ describe('TripForm', () => {
     await user.type(seatsInput, '5')
     expect(seatsInput).toHaveValue(5)
 
+    await user.clear(timeInput)
     await user.type(timeInput, '14:30')
     expect(timeInput).toHaveValue('14:30')
   })
@@ -65,14 +64,11 @@ describe('TripForm', () => {
     const nameInput = screen.getByPlaceholderText('Enter your name')
     const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
 
     await user.type(nameInput, 'Alice')
     await user.type(destinationInput, 'Munich')
     await user.clear(seatsInput)
     await user.type(seatsInput, '4')
-    await user.type(timeInput, '12:00')
 
     await user.click(screen.getByRole('button', { name: 'Create Trip' }))
 
@@ -91,11 +87,11 @@ describe('TripForm', () => {
 
     const nameInput = screen.getByPlaceholderText('Enter your name') as HTMLInputElement
     const destinationInput = screen.getByPlaceholderText('Where are you going?') as HTMLInputElement
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLInputElement
+    const timeInput = screen.getByDisplayValue('12:00') as HTMLInputElement
 
     await user.type(nameInput, 'Bob')
     await user.type(destinationInput, 'Hamburg')
+    await user.clear(timeInput)
     await user.type(timeInput, '15:00')
     await user.click(screen.getByRole('button', { name: 'Create Trip' }))
 
@@ -103,7 +99,7 @@ describe('TripForm', () => {
     await vi.waitFor(() => {
       expect(nameInput.value).toBe('')
       expect(destinationInput.value).toBe('')
-      expect(timeInput.value).toBe('')
+      expect(timeInput.value).toBe('12:00')
     })
   })
 
@@ -124,8 +120,7 @@ describe('TripForm', () => {
     const nameInput = screen.getByPlaceholderText('Enter your name')
     const destinationInput = screen.getByPlaceholderText('Where are you going?')
     const seatsInput = screen.getByDisplayValue('3')
-    const timeInputs = screen.getAllByDisplayValue('')
-    const timeInput = timeInputs.find(input => (input as HTMLInputElement).type === 'time') as HTMLElement
+    const timeInput = screen.getByDisplayValue('12:00') as HTMLElement
 
     expect(nameInput).toBeRequired()
     expect(destinationInput).toBeRequired()
